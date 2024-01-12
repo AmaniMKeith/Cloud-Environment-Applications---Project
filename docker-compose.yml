@@ -1,11 +1,18 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: .
     ports:
       - "8080:80"
-    depends_on:
-      - db
+    environment:
+      - DB_DSN=mysql:host=db;port=3306;dbname=budget_tracker
+      - DB_USER=budget
+      - DB_PASSWORD=budget
+    volumes:
+      - ./public:/var/www/html/public
+      - ./src:/var/www/html/src
+      - .env:/var/www/html/.env
   db:
     image: mysql:latest
     environment:
@@ -13,3 +20,5 @@ services:
       MYSQL_DATABASE: budget_tracker
       MYSQL_USER: budget
       MYSQL_PASSWORD: budget
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
