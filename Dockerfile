@@ -1,18 +1,9 @@
-FROM php:7.4-apache
-
-RUN a2enmod rewrite
-RUN service apache2 restart
+FROM php:7.4-cli
 
 WORKDIR /var/www/html
 
-COPY public /var/www/html
-COPY src /var/www/html
-COPY .env /var/www/html
-
-RUN apt-get update && apt-get install -y mysql-client
+COPY public /var/www/html/public
+COPY src /var/www/html/src
+COPY .env /var/www/html/.env
 
 RUN docker-php-ext-install mysqli pdo_mysql
-
-EXPOSE 80
-
-CMD ["apache2-foreground"]
