@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+  backend:
+    build: ./backend
+    ports:
+       - "8080:80"
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: budget_tracker
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+      MYSQL_ROOT_PASSWORD: 520 741 8
